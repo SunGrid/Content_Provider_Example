@@ -32,22 +32,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        val hasReadContactPermission = ContextCompat.checkSelfPermission(
-            this,
-            READ_CONTACTS
-        ) //imported in as import android.Manifest.permission.READ_CONTACTS
+        //https://developer.android.com/training/permissions/requesting
+        val hasReadContactPermission = ContextCompat.checkSelfPermission(this, READ_CONTACTS) //imported in as import android.Manifest.permission.READ_CONTACTS
         Log.d(TAG, "onCreate: checkSelfPermissions returned: $hasReadContactPermission")
 
-        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "onCreate: permission granted")
-//            readGranted = true  //TODO don't do this!!
-        } else {
+//        if (hasReadContactPermission == PackageManager.PERMISSION_GRANTED) {
+//            Log.d(TAG, "onCreate: permission granted")
+////            readGranted = true  //TODO don't do this!!
+//        } else {
+//            Log.d(TAG, "onCreate: requesting permission")
+//            ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
+//        }
+
+        if (hasReadContactPermission != PackageManager.PERMISSION_GRANTED) {
             Log.d(TAG, "onCreate: requesting permission")
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(READ_CONTACTS),
-                REQUEST_CODE_READ_CONTACTS
-            )
+            ActivityCompat.requestPermissions(this, arrayOf(READ_CONTACTS), REQUEST_CODE_READ_CONTACTS)
         }
 
         fab.setOnClickListener { view ->
@@ -101,7 +100,8 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate: ends")
     }
 
-    override fun onRequestPermissionsResult(
+    //commented out for now that knowing permissions will work or something
+/*    override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         Log.d(TAG, "onRequestPermissionsResult: ends")
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
